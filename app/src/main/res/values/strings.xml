@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DemoAppMusic</string>
+    <string name="title_00">00:00</string>
 </resources>
