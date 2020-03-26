@@ -24,7 +24,6 @@
 
         <activity
             android:name=".PlaySongActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
     </application>
-
 </manifest>
