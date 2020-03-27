@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <service
+            android:name=".PlayMusic"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".PlaySongActivity"
+            android:parentActivityName=".MainActivity" />
+    </application>
 </manifest>
