@@ -13,8 +13,8 @@ class SongAdapter(val mList: ArrayList<SongModel>) :
     RecyclerView.Adapter<SongAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val text_name_song = itemView.findViewById<TextView>(R.id.item_text_name)
-        val image_singer = itemView.findViewById<ImageView>(R.id.item_image_singer)
+        val text_name_song = itemView.findViewById<TextView>(R.id.itemTextName)
+        val image_singer = itemView.findViewById<ImageView>(R.id.itemImageSinger)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,5 +28,6 @@ class SongAdapter(val mList: ArrayList<SongModel>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.text_name_song.text = mList[position].title
+        holder
     }
 }

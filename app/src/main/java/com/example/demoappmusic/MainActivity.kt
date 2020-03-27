@@ -15,25 +15,22 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        lateinit var arrSong: ArrayList<SongModel>
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initArrSong()
-        recyclerview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        recyclerview.addOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(position: Int, view: View) {
-                val intent = Intent(this@MainActivity, PlaySongActivity::class.java)
-                intent.putExtra("data", position)
-                startActivity(intent)
-            }
-        })
-        var adapter = SongAdapter(arrSong)
-        recyclerview.adapter = adapter
+        recyclerview.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
+            adapter = SongAdapter(arrSong)
+            addOnItemClickListener(object : OnItemClickListener {
+                override fun onItemClick(position: Int, view: View) {
+                    val intent = Intent(this@MainActivity, PlaySongActivity::class.java)
+                    intent.putExtra("data", position)
+                    startActivity(intent)
+                }
+            })
+        }
     }
 
     private fun initArrSong() {
@@ -49,5 +46,9 @@ class MainActivity : AppCompatActivity() {
         arrSong.add(SongModel("Lạc trôi", R.raw.lac_troi))
         arrSong.add(SongModel("Sóng gió", R.raw.song_gio))
         arrSong.add(SongModel("Take me to your heart", R.raw.take_me_to_your_heart))
+    }
+
+    companion object {
+        lateinit var arrSong: ArrayList<SongModel>
     }
 }

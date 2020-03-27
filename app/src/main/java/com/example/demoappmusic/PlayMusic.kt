@@ -15,10 +15,10 @@ import java.text.SimpleDateFormat
 
 class PlayMusic : Service() {
 
-    val iBinder = LocalBinder()
-    lateinit var mediaPlayer: MediaPlayer
-    var position: Int = 0
-    var isPlay = false
+    private val iBinder = LocalBinder()
+    private lateinit var mediaPlayer: MediaPlayer
+    private var position: Int = 0
+    private var isPlay = false
 
     inner class LocalBinder : Binder() {
         fun getService(): PlayMusic {
@@ -36,9 +36,9 @@ class PlayMusic : Service() {
     }
 
     fun onSkipNext(
-        text_name: TextView,
-        text_time_current: TextView,
-        text_time_total: TextView,
+        textName: TextView,
+        textTimeCurrent: TextView,
+        textTimeTotal: TextView,
         seekBar: SeekBar
     ) {
         mediaPlayer.stop()
@@ -46,13 +46,13 @@ class PlayMusic : Service() {
         if (position > MainActivity.arrSong.size - 1) {
             position = 0
         }
-        onPlaySong(text_name, text_time_current, text_time_total, seekBar, position)
+        onPlaySong(textName, textTimeCurrent, textTimeTotal, seekBar, position)
     }
 
     fun onSkipPrevious(
-        text_name: TextView,
-        text_time_current: TextView,
-        text_time_total: TextView,
+        textName: TextView,
+        textTimeCurrent: TextView,
+        textTimeTotal: TextView,
         seekBar: SeekBar
     ) {
         mediaPlayer.stop()
@@ -60,7 +60,7 @@ class PlayMusic : Service() {
         if (position < 0) {
             position = MainActivity.arrSong.size - 1
         }
-        onPlaySong(text_name, text_time_current, text_time_total, seekBar, position)
+        onPlaySong(textName, textTimeCurrent, textTimeTotal, seekBar, position)
     }
 
     fun onPauseSong(): Int {
@@ -68,8 +68,8 @@ class PlayMusic : Service() {
         return mediaPlayer.currentPosition
     }
 
-    fun onResumeSong(x: Int) {
-        mediaPlayer.seekTo(x)
+    fun onResumeSong(positionCurrent: Int) {
+        mediaPlayer.seekTo(positionCurrent)
         mediaPlayer.start()
     }
 
@@ -78,9 +78,9 @@ class PlayMusic : Service() {
     }
 
     fun onPlaySong(
-        text_name: TextView,
-        text_time_current: TextView,
-        text_time_total: TextView,
+        textName: TextView,
+        textTimeCurrent: TextView,
+        textTimeTotal: TextView,
         seekBar: SeekBar,
         positionCurrent: Int
     ) {
@@ -91,20 +91,27 @@ class PlayMusic : Service() {
         isPlay = true
         mediaPlayer = MediaPlayer.create(applicationContext, MainActivity.arrSong[position].file)
         val simpleDateFormat = SimpleDateFormat("mm:ss")
-        text_name.text = MainActivity.arrSong[position].title
-        text_time_total.text = simpleDateFormat.format(mediaPlayer.duration)
+        textName.text = MainActivity.arrSong[position].title
+        textTimeTotal.text = simpleDateFormat.format(mediaPlayer.duration)
         seekBar.max = mediaPlayer.duration
         mediaPlayer.start()
+
+        //Sau khoảng thời gian delay (millis) thì function run() bên trong mới được gọi
+        //Nên để thời gian delay ngoài là 2s để tránh trường hợp nhạc chưa được phát thời gian đã được tính
+        //Gây ra text_time_current > text_time_total
 
         val handler = Handler()
         handler.postDelayed(object : Runnable {
             override fun run() {
-                text_time_current.text = simpleDateFormat.format(mediaPlayer.currentPosition)
+                textTimeCurrent.text = simpleDateFormat.format(mediaPlayer.currentPosition)
                 seekBar.progress = mediaPlayer.currentPosition
 
                 mediaPlayer.setOnCompletionListener {
-                    onSkipNext(text_name, text_time_current, text_time_total, seekBar)
+                    onSkipNext(textName, textTimeCurrent, textTimeTotal, seekBar)
                 }
+
+                //handler tiến hành gọi lại chính nó, có thể coi là đệ quy chính nó
+                //nếu handler không tự gọi lại thì run chỉ chạy duy nhất một lần sau thời gian delay của lần gọi đầu tiên
                 handler.postDelayed(this, 0)
             }
         }, 2000)

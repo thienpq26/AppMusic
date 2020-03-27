@@ -50,7 +50,7 @@
         app:layout_constraintGuide_percent="0.8" />
 
     <ImageView
-        android:id="@+id/button_play_pause"
+        android:id="@+id/buttonPlayPause"
         android:layout_width="@dimen/dp_60"
         android:layout_height="@dimen/dp_60"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -60,7 +60,7 @@
         app:srcCompat="@drawable/ic_play_circle" />
 
     <ImageView
-        android:id="@+id/button_skip_previous"
+        android:id="@+id/buttonPrevious"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -70,7 +70,7 @@
         app:srcCompat="@drawable/ic_skip_previous" />
 
     <ImageView
-        android:id="@+id/button_skip_next"
+        android:id="@+id/buttonNext"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -87,7 +87,7 @@
         app:layout_constraintGuide_percent="0.05" />
 
     <TextView
-        android:id="@+id/text_name_song"
+        android:id="@+id/textSong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color_white"
@@ -98,26 +98,26 @@
         app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
     <TextView
-        android:id="@+id/text_time_current"
+        android:id="@+id/textTimeCurrent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_8"
         android:text="@string/title_time_start"
         android:textColor="@color/color_white"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar_music"
+        app:layout_constraintBottom_toTopOf="@+id/seekBarMusic"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/text_total_time"
+        android:id="@+id/textTotalTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_8"
         android:textColor="@color/color_white"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar_music"
+        app:layout_constraintBottom_toTopOf="@+id/seekBarMusic"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <SeekBar
-        android:id="@+id/seekBar_music"
+        android:id="@+id/seekBarMusic"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
@@ -130,13 +130,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView_disc"
+        android:id="@+id/imageViewDisc"
         android:layout_width="@dimen/dp_300"
         android:layout_height="@dimen/dp_300"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar_music"
+        app:layout_constraintBottom_toTopOf="@+id/seekBarMusic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_name_song"
+        app:layout_constraintTop_toBottomOf="@+id/textSong"
         app:srcCompat="@drawable/cd" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

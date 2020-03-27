@@ -21,5 +21,3 @@ fun RecyclerView.addOnItemClickListener(onClickListener: OnItemClickListener) {
         }
     })
 }
-
-

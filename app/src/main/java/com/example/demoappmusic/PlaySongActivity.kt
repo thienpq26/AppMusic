@@ -18,10 +18,10 @@ import kotlinx.android.synthetic.main.activity_play_song.*
 
 class PlaySongActivity : AppCompatActivity() {
 
-    lateinit var playMusic: PlayMusic
-    var isStop = true
-    lateinit var animator: AnimatorSet
-    var position: Int = 0
+    private lateinit var playMusic: PlayMusic
+    private var isStop = true
+    private lateinit var animator: AnimatorSet
+    private var position: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("lc", "onCreate PlaySong")
@@ -35,50 +35,50 @@ class PlaySongActivity : AppCompatActivity() {
             val intent = Intent(this, PlayMusic::class.java)
             position = data.getIntExtra("data", -1)
             bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
-            button_play_pause.setImageResource(R.drawable.ic_pause_circle)
+            buttonPlayPause.setImageResource(R.drawable.ic_pause_circle)
             animator.start()
         }
 
-        button_play_pause.setOnClickListener {
+        buttonPlayPause.setOnClickListener {
             if (isStop) {
                 playMusic.onPauseSong()
                 isStop = false
-                button_play_pause.setImageResource(R.drawable.ic_play_circle)
+                buttonPlayPause.setImageResource(R.drawable.ic_play_circle)
                 animator.pause()
             } else {
                 playMusic.onResumeSong(playMusic.onPauseSong())
                 isStop = true
-                button_play_pause.setImageResource(R.drawable.ic_pause_circle)
+                buttonPlayPause.setImageResource(R.drawable.ic_pause_circle)
                 animator.resume()
             }
         }
 
-        button_skip_next.setOnClickListener {
+        buttonNext.setOnClickListener {
             animator.end()
             if (!isStop) {
                 isStop = true
-                button_play_pause.setImageResource(R.drawable.ic_pause_circle)
+                buttonPlayPause.setImageResource(R.drawable.ic_pause_circle)
             }
             animator.start()
-            playMusic.onSkipNext(text_name_song, text_time_current, text_total_time, seekBar_music)
+            playMusic.onSkipNext(textSong, textTimeCurrent, textTotalTime, seekBarMusic)
         }
 
-        button_skip_previous.setOnClickListener {
+        buttonPrevious.setOnClickListener {
             animator.end()
             if (!isStop) {
                 isStop = true
-                button_play_pause.setImageResource(R.drawable.ic_pause_circle)
+                buttonPlayPause.setImageResource(R.drawable.ic_pause_circle)
             }
             animator.start()
             playMusic.onSkipPrevious(
-                text_name_song,
-                text_time_current,
-                text_total_time,
-                seekBar_music
+                textSong,
+                textTimeCurrent,
+                textTotalTime,
+                seekBarMusic
             )
         }
 
-        seekBar_music.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        seekBarMusic.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             }
 
@@ -86,14 +86,14 @@ class PlaySongActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                playMusic.setSeekBar(seekBar_music)
+                playMusic.setSeekBar(seekBarMusic)
             }
         })
     }
 
     private fun initAnimator() {
         animator = AnimatorSet()
-        val obj = ObjectAnimator.ofFloat(imageView_disc, "rotation", 0f, 360f)
+        val obj = ObjectAnimator.ofFloat(imageViewDisc, "rotation", 0f, 360f)
         obj.duration = 13000
         obj.repeatCount = ValueAnimator.INFINITE
         obj.repeatMode = ValueAnimator.RESTART
@@ -105,10 +105,10 @@ class PlaySongActivity : AppCompatActivity() {
             val binder = service as PlayMusic.LocalBinder
             playMusic = binder.getService()
             playMusic.onPlaySong(
-                text_name_song,
-                text_time_current,
-                text_total_time,
-                seekBar_music,
+                textSong,
+                textTimeCurrent,
+                textTotalTime,
+                seekBarMusic,
                 position
             )
         }
